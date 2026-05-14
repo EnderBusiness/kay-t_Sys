@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Kayıt Denemesi</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 300px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kayıt Ol</h2>
+    <input type="email" id="email" placeholder="E-posta">
+    <input type="password" id="password" placeholder="Şifre">
+    <button id="btnKayit">Kayıt Ol</button>
+</div>
+
+<!-- JAVASCRIPT BURADA BAŞLIYOR -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Kendi config bilgilerini buraya koyduğundan emin ol
+    const firebaseConfig = {
+  apiKey: "AIzaSyAGwWXf-aBMMW7qcEQi1lwL4rntbszL5cg",
+  authDomain: "ender-0001-29028.firebaseapp.com",
+  projectId: "ender-0001-29028",
+  storageBucket: "ender-0001-29028.firebasestorage.app",
+  messagingSenderId: "726073091078",
+  appId: "1:726073091078:web:b5b18465bdaac4952b0f87",
+  measurementId: "G-JYJ2LM5H77"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById('btnKayit').addEventListener('click', () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        console.log("Butona basıldı!"); // F12 konsolunda bunu görüyorsan kod çalışıyor demektir
+
+        if (!email || !password) {
+            alert("Lütfen alanları doldur!");
+            return;
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(() => alert("Kayıt Başarılı!"))
+            .catch((error) => alert("Hata: " + error.message));
+    });
+</script>
+</body>
+</html>
