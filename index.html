@@ -2,104 +2,49 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Kayıt Sistemi</title>
+    <title>Sıfırdan Kayıt Sistemi</title>
     <style>
-        /* Modern ve şık bir görünüm için temel CSS */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1e1e2f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: white;
-        }
-        .container {
-            background: #2d2d44;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #3f3f5f;
-            border-radius: 6px;
-            background: #1e1e2f;
-            color: white;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #6c5ce7;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #a29bfe;
-        }
+        body { background: #121212; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .box { background: #1e1e1e; padding: 20px; border-radius: 10px; text-align: center; }
+        input { display: block; width: 250px; padding: 10px; margin: 10px auto; border-radius: 5px; border: none; }
+        button { padding: 10px 20px; cursor: pointer; background: #00cf5d; border: none; color: white; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Kayıt Ol</h2>
-        <input type="email" id="emailInput" placeholder="E-posta Adresiniz">
-        <input type="password" id="passwordInput" placeholder="Şifreniz (min. 6 karakter)">
-        <button id="registerBtn">Hesap Oluştur</button>
+    <div class="box">
+        <h2>Yeni Kayıt</h2>
+        <input type="email" id="userEmail" placeholder="E-posta">
+        <input type="password" id="userPass" placeholder="Şifre">
+        <button id="btnKayit">Kayıt Ol</button>
     </div>
 
-    <!-- Firebase Modülleri -->
     <script type="module">
-        // Firebase SDK'larını doğrudan Google sunucularından çekiyoruz
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Senin verdiğin Firebase yapılandırması
+        // Senin güncel Firebase bilgilerini buraya koydum
         const firebaseConfig = {
             apiKey: "AIzaSyAGwWXf-aBMMW7qcEQi1lwL4rntbszL5cg",
             authDomain: "ender-0001-29028.firebaseapp.com",
             projectId: "ender-0001-29028",
             storageBucket: "ender-0001-29028.firebasestorage.app",
             messagingSenderId: "726073091078",
-            appId: "1:726073091078:web:b5b18465bdaac4952b0f87",
-            measurementId: "G-JYJ2LM5H77"
+            appId: "1:726073091078:web:b5b18465bdaac4952b0f87"
         };
 
-        // Firebase'i başlat
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Buton tıklama olayını yakala
-        document.getElementById("registerBtn").addEventListener("click", async () => {
-            const email = document.getElementById("emailInput").value;
-            const password = document.getElementById("passwordInput").value;
-
-            if (!email || !password) {
-                alert("Lütfen tüm alanları doldurun!");
-                return;
-            }
+        document.getElementById("btnKayit").addEventListener("click", async () => {
+            const email = document.getElementById("userEmail").value;
+            const pass = document.getElementById("userPass").value;
 
             try {
-                // Kayıt işlemi
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                console.log("Başarılı:", userCredential.user);
-                alert("Kayıt Başarılı! Hoş geldin.");
+                const user = await createUserWithEmailAndPassword(auth, email, pass);
+                alert("BAŞARILI: " + user.user.email);
             } catch (error) {
-                console.error("Hata oluştu:", error.code);
-                // Eğer hala domain hatası alıyorsan mesaj burada görünecek
-                alert("Hata: " + error.message);
+                alert("HATA: " + error.message);
             }
         });
     </script>
