@@ -21,11 +21,11 @@
 
 <!-- JAVASCRIPT BURADA BAŞLIYOR -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+   // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
-    // Kendi config bilgilerini buraya koyduğundan emin ol
-    const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAGwWXf-aBMMW7qcEQi1lwL4rntbszL5cg",
   authDomain: "ender-0001-29028.firebaseapp.com",
   projectId: "ender-0001-29028",
@@ -33,10 +33,11 @@
   messagingSenderId: "726073091078",
   appId: "1:726073091078:web:b5b18465bdaac4952b0f87",
   measurementId: "G-JYJ2LM5H77"
-    };
+};
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
     document.getElementById('btnKayit').addEventListener('click', () => {
         const email = document.getElementById('email').value;
